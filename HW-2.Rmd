@@ -16,7 +16,7 @@ suppressPackageStartupMessages(library(foreign))
 Please indicate
 
 * Who you collaborated with: Christian Lehner
-* Roughly how much time you spent on this HW: 8
+* Roughly how much time you spent on this HW: 11 total
 * What gave you the most trouble:Understanding the questions and what was expected for the Exploratry data analysis
 * Any comments you have: 
 
@@ -52,7 +52,7 @@ A<- coefficients(model1)
 plot1<- ggplot(data=pollution,aes(x=nox,y=mort,xlab=("NOX"), ylab=("Mortality Rate")))+geom_point(stat="identity")+geom_jitter(height = 0.2)
 plot1+ geom_abline(intercept=A[1], slope=A[2], col="blue", size=1)+geom_smooth(method="lm", size=1, level=0.95)
 ```
-
+The regression is not a good fit nor does it accrately represent where the bulk of the data and can barely predict the trajectory of the data.A better line would have been one that was slightly positive.
 
 ### b)
 
@@ -67,7 +67,7 @@ plot1<- ggplot(data=pollution,aes(x=lognox,y=mort,xlab=("NOX"), ylab=("Mortality
 plot1+ geom_abline(intercept=B[1], slope=B[2], col="blue", size=1)+geom_smooth(method="lm", size=1, level=0.95)
 
 ```
-
+The regression is a much better fit than the previous regression line. Athough still not that great of a fit, it does accurately represent the trajectory of the data. 
 
 ### c)
 
@@ -115,6 +115,7 @@ Wasn't sure how to go about this.
 ```
 Cross-validation tests the efficiency of a model by using a subset of the
 available dataset to fit the model, then tests its ability to predict results using the rest of the dataset.
+You would use cross validation to test how effectively a model can predict results of the rest of the data set. 
 
 
 
@@ -142,6 +143,7 @@ profiles <- read.csv("profiles.csv", header=TRUE) %>% tbl_df()
 # Feel free to make multiple code blocks, but set echo, fig.width, fig.height as 
 # above
 smokes<- profiles %>% select(smokes, sex) %>% 
+group_by(sex)%>% 
 group_by(smokes, sex) %>% tally() %>% arrange(desc(n))
 smokes$smokes <- factor(smokes$smokes , levels = smokes$smokes [order(-smokes$n)])
 ggplot(smokes, aes(x = smokes, y = n, fill = sex)) +
@@ -149,12 +151,13 @@ geom_bar(stat = "identity", position = "dodge") +
 labs(title = "Smoking Habits of Bay Area OK Cupid Users",
  x = "smokes", y = "Number of Users")
 ```
-Was not sure how to get rid of blank entries
+This shows the smoking habits of OK cupid users. Because there are a lot more males that visit the site, the number of men outnumber the number of women in all of the smoking categories. A better representation could have been showing the proportion, or the percentage of each gender that doesn't smoke, only smokes sometimes and is trying to quit e.t.c. This would make the stats more comparable between the males and the females. 
 
 ```{r, echo=FALSE, fig.width=12, fig.height=6}
 # Feel free to make multiple code blocks, but set echo, fig.width, fig.height as 
 # above
 drugs <- profiles %>% select(drugs, sex) %>% 
+group_by(sex)%>%  
 group_by(drugs, sex) %>% tally() %>% arrange(desc(n))
 drugs$drugs <- factor(drugs$drugs , levels = drugs$drugs [order(-drugs$n)])
 ggplot(drugs, aes(x = drugs, y = n, fill = sex)) +
@@ -162,5 +165,5 @@ geom_bar(stat = "identity", position = "dodge") +
 labs(title = "Drug habits of Bay Area OK Cupid Users",
 x = "Drug Use", y = "Number of Users")
 ```
-Was not sure how to get rid of the blank entries
+This shows the drug habits of OK cupid users. Because there are a lot more males that visit the site, the number of men outnumber the number of women in all of the drug categories.A better representation could have been showing the proportion, or the percentage of each gender that never uses drugs, only uses drugs sometimes, or is trying to quit.This would make the stats more comparable between the males and the females. 
 
